@@ -1,7 +1,7 @@
 <%-- 
-    Document   : funcionarios
-    Created on : 31/05/2020, 23:13:03
-    Author     : Felipe
+    Document   : clientes
+    Created on : Apr 16, 2020, 10:45:27 AM
+    Author     : felipeferreira
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,8 +10,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="css/clientesEstilo.css">
-        <title>Funcionários</title>      
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/clientesEstilo.css">
+        <title>Clientes</title>      
     </head>
     <body id="duas-col">
         <header>
@@ -19,10 +19,10 @@
                 <div class="center">
                     <ul>
                         <button type="button" value="Voltar" onClick="history.go(-1)">Voltar</button>
-                        <li><a href="/clientes">Gestao de Cliente</a></li>
-                        <li><a href="/produtos">Gestao de Produtos</a></li>
-                        <li><a href="/relatorioAnalitico.jsp">Relatorio Financeiro</a></li>
-                        <li><a href="/vendas.jsp">Vendas</a></li>
+                        <li><a href="/restrito/clientes">Gestao de Cliente</a></li>
+                        <li><a href="/restrito/produtos">Gestao de Produtos</a></li>
+                        <!--<li><a href="/restrito/relatorioAnalitico.jsp">Relatorio Financeiro</a></li>-->
+                        <li><a href="/restrito/vendas.jsp">Vendas</a></li>
                     </ul>
                 </div><!--center-->
             </nav>
@@ -31,10 +31,10 @@
             <br>
         </div><!--espacador-->
         <section class="center">
-            <div class="nome-aba">Funcionários</div>
+            <div class="nome-aba">Clientes</div>
             <div id="tela">
                 <div class="conteudo">
-                    <form method="post" action="${pageContext.request.contextPath}/funcionarios/salvar">
+                    <form method="post" action="${pageContext.request.contextPath}/restrito/clientes/salvar">
                         <div class="inputs">
                             <div>
                                 <label for="">Nome: </label>
@@ -48,11 +48,7 @@
                             <div>
                                 <label for="">E-mail: </label>
                                 <input type="text" name="email" required>
-                            </div>
-                             <div>
-                                <label for="">Celular: </label>
-                                <input type="text" name="celular" required>
-                            </div>
+                            </div>     
                             <div>
                                 <label class="labelsexo" for="">Sexo: </label>
                                 <div class ="radiobuttons">
@@ -63,22 +59,6 @@
                                     <input type="radio" id="outro" name="sexo" value="O">
                                     <label for="other">Outro</label>
                                 </div>
-                            </div>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                             <div>
-                                <label for="">Cargo: </label>
-                                <input type="text" name="cargo" required>
-                            </div>
-                             <div>
-                                <label for="">Usuário: </label>
-                                <input type="text" name="user" required>
-                            </div>
-                             <div>
-                                <label for="">Senha: </label>
-                                <input type="password" name="senha" required>
                             </div>
                             <!--   <div>
                                    <label for="">Dt. Nascimento: </label>
@@ -94,7 +74,7 @@
 
 
                 <!--buscar--> 
-                <form action="${pageContext.request.contextPath}/funcionarios" method="GET">    
+                <form action="${pageContext.request.contextPath}/restrito/clientes" method="GET">    
                     <label for="">Buscar (CPF): </label>
                     <input  name="CPF" type="text">  <button type="submit">Buscar</button>
                 </form>
@@ -103,33 +83,29 @@
                 <div class="conteudo">
                     <div class="clientes">
                         <div class="titulo">
-                            Funcionario
+                            Cliente
                         </div><!--titulo-->
                         <table>
                             <tr>
                                 <th class="nome">Nome</th>
                                 <th class="cpf">CPF</th>
                                 <th class="email">E-mail</th>
-                                <th class="celular">Celular</th>
                                 <th class="sexo">Sexo</th>
-                                <th class="cargo">Cargo</th>
                                 <th class="acoes">Ações</th>
                             </tr>
-                            <c:forEach items="${listarFuncionarios}" var="funcionario" >
+                            <c:forEach items="${listarClientes}" var="cliente" >
                                 <tr class="hover">
-                                    <td class="nome" ><c:out value="${funcionario.getNome()}"/></td>
-                                    <td class="cpf"><c:out value="${funcionario.getCpf()}"/></td>
-                                    <td class="email"><c:out value="${funcionario.getEmail()}"/></td>
-                                    <td class="celular" ><c:out value="${funcionario.getCelular()}"/></td>
-                                    <td class="sexo"><c:out value="${funcionario.getSexo()}"/></td>
-                                    <td class="cargo" ><c:out value="${funcionario.getCargo()}"/></td>
+                                    <td class="nome" ><c:out value="${cliente.getNome()}"/></td>
+                                    <td class="cpf"><c:out value="${cliente.getCpf()}"/></td>
+                                    <td class="email"><c:out value="${cliente.getEmail()}"/></td>
+                                    <td class="sexo"><c:out value="${cliente.getSexo()}"/></td>
                                     <td class="buttonExcluir">
-                                        <form action="${pageContext.request.contextPath}/funcionarios/excluir" method="GET">
-                                            <input name="ID" value="${funcionario.getId()}" type="hidden"/>
+                                        <form action="${pageContext.request.contextPath}/restrito/clientes/excluir" method="GET">
+                                            <input name="ID" value="${cliente.getId()}" type="hidden"/>
                                             <button type="submit" id ="actions">Excluir</button>
                                         </form>
-                                        <form action="${pageContext.request.contextPath}/funcionarios/redireciona" method="GET">  
-                                            <input name="funcionarioCpf" value="${funcionario.getCpf()}" type="hidden"/>
+                                        <form action="${pageContext.request.contextPath}/restrito/clientes/redireciona" method="GET">  
+                                            <input name="clienteCpf" value="${cliente.getCpf()}" type="hidden"/>
                                             <button type="submit" id ="actions">Editar</button>
                                         </form>
                                     </td>
@@ -144,7 +120,7 @@
         </section><!--center-->
         <footer>
             <div>
-                Felipe Ferreira Henriques, Luciana Alves, Matheus Makoto e Rogerio Lucon. 
+                Felipe Ferreira Henriques, Luciana Alves , Matheus Makoto e Rogerio Lucon. 
             </div>
         </footer>
     </body>
@@ -168,5 +144,4 @@
         return false;
     }
 </script>
-
 
