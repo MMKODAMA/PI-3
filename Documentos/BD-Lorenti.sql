@@ -115,3 +115,4 @@ insert into funcionario(func_nome,func_cpf,func_email,func_celular,func_sexo,fun
     select * from funcionario;
     Select * from Funcionario where func_user = "testeCript";
     insert into funcionario(func_nome,func_cpf,func_email,func_celular,func_sexo,func_filial,func_cargo,func_user,func_senha) value ('teste','66666666666','email4@email.com','123232345','M',1,'DEV','testeuser','123');
+    
