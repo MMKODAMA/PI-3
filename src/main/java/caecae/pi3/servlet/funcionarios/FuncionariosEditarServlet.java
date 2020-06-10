@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Felipe
  */
-@WebServlet(name = "FuncionariosEditarServlet", urlPatterns = {"/funcionarios/atualizar"})
+@WebServlet(name = "FuncionariosEditarServlet", urlPatterns = {"/restrito/funcionarios/atualizar"})
 public class FuncionariosEditarServlet extends HttpServlet {
 
     private FuncionarioService service = new FuncionarioService();
@@ -66,12 +66,13 @@ public class FuncionariosEditarServlet extends HttpServlet {
             sessao.setAttribute("msgSucesso", "Funcionario alterado com sucesso");
         } catch (AppException ex) {
             sessao.setAttribute("msgErro", "Erro ao editar funcionario - " + ex.getMessage());
-             response.sendRedirect(request.getContextPath() + "/funcionarios");
+//             response.sendRedirect(request.getContextPath() + "/funcionarios");
         }       catch (DaoException ex) {
                     Logger.getLogger(FuncionariosSalvarServlet.class.getName()).log(Level.SEVERE, null, ex);
-                     response.sendRedirect(request.getContextPath() + "/funcionarios");
-                }
-        response.sendRedirect(request.getContextPath() + "/funcionarios");
+//                     response.sendRedirect(request.getContextPath() + "/restrito/funcionarios");
+                }finally{
+        response.sendRedirect(request.getContextPath() + "/restrito/funcionarios");
+        }
 
     }
 
