@@ -78,6 +78,6 @@ public class FuncionariosSalvarServlet extends HttpServlet {
         } catch (DaoException ex) {
             Logger.getLogger(FuncionariosSalvarServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect(request.getContextPath() + "/WEB-INF/jsp/funcionarios");
+        response.sendRedirect(request.getContextPath() + "/restrito/funcionarios");
     }
 }

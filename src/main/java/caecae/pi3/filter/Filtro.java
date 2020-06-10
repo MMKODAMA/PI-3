@@ -44,7 +44,7 @@ public class Filtro implements Filter {
         
         //verifica se esta logado
         HttpSession sessao = httpRequest.getSession();
-        
+//        
         chain.doFilter(request, response); 
         
         return;
@@ -74,20 +74,24 @@ public class Filtro implements Filter {
 
     private boolean verificaAcesso(Sessao usuario, HttpServletRequest request){
       String urlAcessada = request.getRequestURI();
-    
-      if(urlAcessada.endsWith("/vendas") && usuario.getCargo().equalsIgnoreCase("1")){
-            return true;
+      
+      if(usuario.getCargo().equalsIgnoreCase("vendedor")){
+          return true;
       }
-      if(urlAcessada.endsWith("/"
-              + "funcionario") && usuario.getCargo().equalsIgnoreCase("1")){
-            return true;
-      }
-      if(urlAcessada.endsWith("/produto") && usuario.getCargo().equalsIgnoreCase("1")){
-            return true;
-      }     
-      if(urlAcessada.endsWith("/cliente") && usuario.getCargo().equalsIgnoreCase("1")){
-            return true;
-      }     
+//      return false;
+//      if(urlAcessada.endsWith("/vendas") && usuario.getCargo().equalsIgnoreCase("vendedor")){
+//            return true;
+//      }
+//      if(urlAcessada.endsWith("/"
+//              + "funcionario") && usuario.getCargo().equalsIgnoreCase("1")){
+//            return true;
+//      }
+//      if(urlAcessada.endsWith("/produto") && usuario.getCargo().equalsIgnoreCase("1")){
+//            return true;
+//      }     
+//      if(urlAcessada.endsWith("/cliente") && usuario.getCargo().equalsIgnoreCase("1")){
+//            return true;
+//      }     
         return false;
     }
    

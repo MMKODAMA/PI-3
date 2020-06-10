@@ -36,7 +36,7 @@ public class FuncionariosExcluirServlet extends HttpServlet {
         } catch (AppException ex) {
             Logger.getLogger(FuncionariosExcluirServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.sendRedirect(request.getContextPath() + "/WEB-INF/jsp/funcionarios");
+        response.sendRedirect(request.getContextPath() + "/restrito/funcionarios");
     }
 
 }
