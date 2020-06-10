@@ -45,28 +45,27 @@ public class Filtro implements Filter {
         //verifica se esta logado
         HttpSession sessao = httpRequest.getSession();
 //        
-        chain.doFilter(request, response); 
-        
-        return;
-//        if(sessao.getAttribute("usuario") == null){
-//            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login/validate");
-//            return;
-//        }
-//
-//        Sessao usuario = (Sessao) sessao.getAttribute("usuario");
+//        chain.doFilter(request, response); 
 //        
-//        if(verificaAcesso(usuario, httpRequest)){
-//           chain.doFilter(request, response); 
-//        } else{
-////              nao autorizado
-//        }
+//        return;
+        if(sessao.getAttribute("usuario") == null){
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login/validate");
+            return;
+        }
+
+        Sessao usuario = (Sessao) sessao.getAttribute("usuario");
+        
+        if(verificaAcesso(usuario, httpRequest)){
+           chain.doFilter(request, response); 
+        } else{
+//              nao autorizado
+        }
     }
 
     @Override
     public void destroy() {        
     }
 
-   
     @Override
     public void init(FilterConfig filterConfig) {        
        
@@ -74,24 +73,25 @@ public class Filtro implements Filter {
 
     private boolean verificaAcesso(Sessao usuario, HttpServletRequest request){
       String urlAcessada = request.getRequestURI();
-      
-      if(usuario.getCargo().equalsIgnoreCase("vendedor")){
+      if(usuario.getCargo() == null){
+          throw new RuntimeException("SEM USER");
+      }
+      if(usuario.getCargo().equalsIgnoreCase("DEV")){
           return true;
       }
-//      return false;
-//      if(urlAcessada.endsWith("/vendas") && usuario.getCargo().equalsIgnoreCase("vendedor")){
-//            return true;
-//      }
-//      if(urlAcessada.endsWith("/"
-//              + "funcionario") && usuario.getCargo().equalsIgnoreCase("1")){
-//            return true;
-//      }
-//      if(urlAcessada.endsWith("/produto") && usuario.getCargo().equalsIgnoreCase("1")){
-//            return true;
-//      }     
-//      if(urlAcessada.endsWith("/cliente") && usuario.getCargo().equalsIgnoreCase("1")){
-//            return true;
-//      }     
+      if(urlAcessada.endsWith("/vendas") && usuario.getCargo().equalsIgnoreCase("vendedor")){
+            return true;
+      }
+      if(urlAcessada.contains("/"
+              + "funcionario") && usuario.getCargo().equalsIgnoreCase("Gerente")){
+            return true;
+      }
+      if(urlAcessada.endsWith("/produto") && usuario.getCargo().equalsIgnoreCase("Gerente")){
+            return true;
+      }     
+      if(urlAcessada.endsWith("/cliente") && usuario.getCargo().equalsIgnoreCase("Vendedor")){
+            return true;
+      }     
         return false;
     }
    

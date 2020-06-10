@@ -1,6 +1,7 @@
  
 package caecae.pi3.sessao;
 
+import caecae.pi3.model.Sessao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class sessaoServlet extends HttpServlet {
         processRequest(request, response);
         
         HttpSession sessao = request.getSession();
-        
+        Sessao sessaoAtt = new Sessao();
         
         
     }

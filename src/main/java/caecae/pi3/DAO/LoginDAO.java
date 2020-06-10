@@ -20,10 +20,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.mindrot.jbcrypt.BCrypt;
+
 public class LoginDAO {
-PreparedStatement stmt;
-ResultSet rs;
-Connection con;
+
+    PreparedStatement stmt;
+    ResultSet rs;
+    Connection con;
     /**
      *
      * @param usuario
@@ -44,7 +46,7 @@ Connection con;
                 login.setUser(rs.getString("func_user"));
                 login.setSenha(rs.getString("func_senha"));
             }
-            if (usuario.equals(login.getUser())) {
+            if (usuario.equals(login.getUser()) && (!usuario.isEmpty())) {
                 return BCrypt.checkpw(senha, login.getSenha());
             } else {
                 return false;

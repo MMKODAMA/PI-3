@@ -16,14 +16,14 @@ import java.util.logging.Logger;
  * @author Mateus
  */
 public class SessaoDAO {
-    
-    public void guardaSessao(String user) throws DaoException, AppException, SQLException {
+
+    public Sessao guardaSessao(String user) throws DaoException, AppException, SQLException {
         Sessao sessao = null;
         String sql = "Select * from Funcionario where func_user = ?";
-           try (Connection conn = ConnectionFactory.getConnection();) {
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, user);
-                ResultSet rs = stmt.executeQuery();
+        try (Connection conn = ConnectionFactory.getConnection();) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "testeCript");
+            ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 sessao = new Sessao();
                 sessao.setUser(rs.getString("func_user"));
@@ -31,8 +31,9 @@ public class SessaoDAO {
                 sessao.setCargo(rs.getString("func_cargo"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SessaoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
         }
-           
-}
+        return sessao;
+
+    }
 }

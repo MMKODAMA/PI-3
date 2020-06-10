@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 import caecae.pi3.DAO.SessaoDAO;
+import caecae.pi3.model.Sessao;
 import caecae.pi3.service.AppException;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "validate", urlPatterns = {"/login/validate"})
 public class validate extends HttpServlet {
@@ -31,7 +33,7 @@ public class validate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     @Override
@@ -39,33 +41,37 @@ public class validate extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         PrintWriter pw = response.getWriter();
-        
-        
+
         String user = request.getParameter("user");
         String senha = request.getParameter("senha");
 
         request.setAttribute("loginUser", user);
         request.setAttribute("loginSenha", senha);
-        
+
         try {
+            HttpSession sessaoHTTP = request.getSession();
             SessaoDAO sessao = new SessaoDAO();
-            boolean teste = caecae.pi3.DAO.LoginDAO.verifUser(user,senha);
-            if(teste == true){
+            boolean teste = caecae.pi3.DAO.LoginDAO.verifUser(user, senha);
+            if (teste == true) {
                 request.setAttribute("loginUser", "DEU CERTO");
+
                 try {
-                    sessao.guardaSessao(user);
+                    Sessao sessaoAtual = sessao.guardaSessao(user.trim());
+                    sessaoHTTP.setAttribute("usuario", sessaoAtual);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+                    dispatcher.forward(request, response);
                 } catch (AppException ex) {
-                    Logger.getLogger(validate.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new RuntimeException("VALIDATE");
                 }
-            }else{
+            } else {
                 request.setAttribute("loginUser", "DEU ERRADO");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/login/validate");
+                dispatcher.forward(request, response);
             }
         } catch (DaoException | SQLException ex) {
             Logger.getLogger(validate.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/testeDeLogin.jsp");
-        dispatcher.forward(request, response);
     }
 
     @Override

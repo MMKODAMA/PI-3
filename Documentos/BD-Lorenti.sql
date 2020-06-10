@@ -18,14 +18,14 @@ func_cpf varchar(11) not null unique,
 func_email varchar(45)not null unique,
 func_celular varchar (11)not null unique,
 func_sexo char not null,
-func_filial int not null,
+func_filial int ,
 func_cargo varchar (40) not null,
 func_user varchar (40) not null unique,
 func_senha varchar(1000)not null,
 primary key (func_id)
 );
 create table unidade(
-unid_id integer auto_increment not null unique,
+unid_id int auto_increment not null unique,
 unid_nome varchar(40) not null ,
 unid_endereco varchar(50) not null,
 unid_estado varchar(2) not null,
@@ -44,7 +44,7 @@ foreign key (prod_filial) references unidade(unid_id)
 create table venda(
 venda_id integer auto_increment not null unique,
 venda_data_venda datetime default current_timestamp,
-venda_func smallint not null,
+venda_func int not null,
 venda_val_total numeric(10,2) not null,
 venda_cli_id integer not null,
 venda_filial int,
@@ -69,11 +69,7 @@ INSERT INTO cliente(cli_cpf, cli_nome, cli_email, cli_sexo) VALUES
 ('44444444444', 'Maria Eduarda', 'Maria_2000@myEmail.com', 'X'),
 ('55555555555', 'Carlos Eduardo', 'Cadu_Silva@myEmail.com', 'M'),
 ('66666666666', 'Joao Roberto', 'JoaoGordo@myEmail.com', 'M');
-INSERT INTO funcionario(func_cpf, func_nome, func_email, func_sexo, func_celular, func_cargo, func_user, func_senha) VALUES
-('10010010010', 'Javison', 'Javison@myEmail.com', 'M', '11999999999', 'Vendedor','user01','user'),
-('20020020020', 'Secharpson', 'Secharpson@myEmail.com', 'M', '11988888888', 'Gerente_Regional','user02','user'),
-('30030030030', 'Ruby', 'Ruby@myEmail.com', 'F', '11977777777', 'Gerente_Geral','user03','user'),
-('40040040040', 'Euphoria', 'Euphoria@myEmail.com', 'X', '11966666666', 'GBackOffice','user04','user');
+
 INSERT INTO unidade(unid_nome, unid_endereco, unid_estado) VALUES
 ('Matriz', 'Rua 23 de maio, numero 157','SP'),
 ('Filial Brasilia', 'Rua Marechal, numero 12','DF'),
@@ -111,3 +107,11 @@ Create Trigger after_vender_item
     end//
     
 DELIMITER ;
+insert into funcionario(func_nome,func_cpf,func_email,func_celular,func_sexo,func_filial,func_cargo,func_user,func_senha) values ('fulano','12345678910','email@email.com','123412345','M',2,'DEV','fulanouser','123'),
+	('fulana','12345678911','email1@email.com','123412346','F',1,'DEV','fulanauser','123');
+    select func_user from funcionario where func_user ='fulanauser';
+    select func_senha from funcionario where func_user ='fulanauser';
+    select func_user , func_senha from funcionario where func_user = 'fulanouser';
+    select * from funcionario;
+    Select * from Funcionario where func_user = "testeCript";
+    insert into funcionario(func_nome,func_cpf,func_email,func_celular,func_sexo,func_filial,func_cargo,func_user,func_senha) value ('teste','66666666666','email4@email.com','123232345','M',1,'DEV','testeuser','123');
