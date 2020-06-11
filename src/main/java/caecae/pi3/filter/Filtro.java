@@ -73,7 +73,8 @@ public class Filtro implements Filter {
 
     private boolean verificaAcesso(Sessao usuario, HttpServletRequest request){
         String urlAcessada = request.getRequestURI();
-
+        
+//        throw new RuntimeException(usuario.getCargo());
         if(usuario.getCargo() == null){
             throw new RuntimeException("SEM USER");
         }
