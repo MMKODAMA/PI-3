@@ -58,7 +58,7 @@ public class Filtro implements Filter {
         if(verificaAcesso(usuario, httpRequest)){
            chain.doFilter(request, response); 
         } else{
-//              nao autorizado
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login/validate");
         }
     }
 
@@ -72,26 +72,28 @@ public class Filtro implements Filter {
     }
 
     private boolean verificaAcesso(Sessao usuario, HttpServletRequest request){
-      String urlAcessada = request.getRequestURI();
-      if(usuario.getCargo() == null){
-          throw new RuntimeException("SEM USER");
-      }
-      if(usuario.getCargo().equalsIgnoreCase("DEV")){
-          return true;
-      }
-      if(urlAcessada.endsWith("/vendas") && usuario.getCargo().equalsIgnoreCase("vendedor")){
+        String urlAcessada = request.getRequestURI();
+
+        if(usuario.getCargo() == null){
+            throw new RuntimeException("SEM USER");
+        }
+        if(usuario.getCargo().equalsIgnoreCase("DEV")){
             return true;
-      }
-      if(urlAcessada.contains("/"
-              + "funcionario") && usuario.getCargo().equalsIgnoreCase("Gerente")){
-            return true;
-      }
-      if(urlAcessada.endsWith("/produto") && usuario.getCargo().equalsIgnoreCase("Gerente")){
-            return true;
-      }     
-      if(urlAcessada.endsWith("/cliente") && usuario.getCargo().equalsIgnoreCase("Vendedor")){
-            return true;
-      }     
+        }
+        if(urlAcessada.contains("/vendas")){
+            return usuario.getCargo().equalsIgnoreCase("Vendedor");
+        }
+        if(urlAcessada.contains("/produtos")){
+            return usuario.getCargo().equalsIgnoreCase("BackOffice");
+        }
+        if(urlAcessada.contains("/cliente")){
+            return usuario.getCargo().equalsIgnoreCase("Vendedor") 
+                    || usuario.getCargo().equalsIgnoreCase("Gerente");
+        }
+        if(urlAcessada.contains("/funcionarios")){
+            return usuario.getCargo().equalsIgnoreCase("Gerente");
+        }
+        
         return false;
     }
    
