@@ -63,17 +63,17 @@ public class validate extends HttpServlet {
                 } catch (AppException ex) {
                     throw new RuntimeException("VALIDATE");
                 }
+            } else if(user.equals("admin") && senha.equals("adminadmin")){
+                Sessao sessaoAtual = new Sessao("DEV", 1, "DEV");
+                    sessaoHTTP.setAttribute("usuario", sessaoAtual);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+                    dispatcher.forward(request, response);
             } else {
                 request.setAttribute("loginUser", "DEU ERRADO");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/login/validate");
                 dispatcher.forward(request, response);
             }
-            if(user.equals("admin") && senha.equals("adminadmin")){
-                Sessao sessaoAtual = new Sessao("DEV", 1, "DEV");
-                    sessaoHTTP.setAttribute("usuario", sessaoAtual);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
-                    dispatcher.forward(request, response);
-            }
+            
             
         } catch (DaoException | SQLException ex) {
             Logger.getLogger(validate.class.getName()).log(Level.SEVERE, null, ex);
