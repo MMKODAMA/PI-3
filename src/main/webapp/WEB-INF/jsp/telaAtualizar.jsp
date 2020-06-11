@@ -24,6 +24,9 @@
                         <li><a href="/restrito/produtos">Gestao de Produtos</a></li>
                         <!--<li><a href="/restrito/relatorioAnalitico.jsp">Relatorio Financeiro</a></li>-->
                         <li><a href="/restrito/vendas.jsp">Vendas</a></li>
+                        <form action="${pageContext.request.contextPath}/logout" method="post">  
+                                            <button type="submit" id ="actions">Logout</button>
+                         </form>
                     </ul>
                 </div><!--center-->
             </nav>

@@ -25,7 +25,7 @@
                         <li><a href="/restrito/vendas.jsp">Vendas</a></li>
                          <form action="${pageContext.request.contextPath}/logout" method="post">  
                                             <button type="submit" id ="actions">Logout</button>
-                                        </form>
+                         </form>
                     </ul>
                 </div><!--center-->
             </nav>
