@@ -16,11 +16,11 @@ import java.util.logging.Logger;
  * @author rolucon
  */
 public class ConnectionFactory {
-    private static final String DB_NAME = "lorentiBD";
-    private static final String URL = "jdbc:mysql://localhost:3306/" + DB_NAME+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PW = "";
-
+private static final String DB_NAME = "lorentiBD";
+    private static final String URL = "jdbc:mysql://database-1.clkjy4pp6nsz.us-east-1.rds.amazonaws.com:3306/" + DB_NAME
+            +"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String USER = "admin";
+    private static final String PW = "Pi3caecae";
     public static Connection getConnection() throws SQLException {
         // Mudei a forma de conseguir a conexão porque não estava funcionando e baseado em https://stackoverflow.com/a/2839563
         MysqlDataSource dataSource = new MysqlDataSource();
@@ -32,8 +32,9 @@ public class ConnectionFactory {
             Connection connection = dataSource.getConnection();
             return connection;
         } catch (SQLException ex) {
-            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
-            throw new SQLException("Erro de Conexao", ex);
+            throw new RuntimeException("CONN");
+//            Logger.getLogger(ConnectionFactory.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new SQLException("Erro de Conexao", ex);
         }
     }
 

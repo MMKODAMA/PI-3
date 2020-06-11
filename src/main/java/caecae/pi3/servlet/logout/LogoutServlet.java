@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,16 +23,20 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
 
-   @Override
+@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
-        
+
+         HttpSession sessao = request.getSession();
+         sessao.invalidate();
+         sessao = request.getSession(false);
+
         Sessao s = new Sessao();
         s.setCargo(null);
         s.setFilial(-1);
         s.setUser(null);
-       
+
         response.sendRedirect(request.getContextPath() + "/login/validate");
     }
 }
