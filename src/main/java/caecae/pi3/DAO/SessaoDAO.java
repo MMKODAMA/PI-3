@@ -22,7 +22,7 @@ public class SessaoDAO {
         String sql = "Select * from Funcionario where func_user = ?";
         try (Connection conn = ConnectionFactory.getConnection();) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, "testeCript");
+            stmt.setString(1, user);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 sessao = new Sessao();
