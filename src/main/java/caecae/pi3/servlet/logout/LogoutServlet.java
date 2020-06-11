@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,6 +28,10 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
             request.setCharacterEncoding("UTF-8");
         
+         HttpSession sessao = request.getSession();
+         sessao.invalidate();
+         sessao = request.getSession(false);
+         
         Sessao s = new Sessao();
         s.setCargo(null);
         s.setFilial(-1);
